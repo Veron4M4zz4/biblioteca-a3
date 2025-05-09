@@ -1,7 +1,7 @@
 package models;
 
 public class Aluno extends Usuario { 
-    private string matricula;
+    private String matricula;
 
     public Aluno(String nome, String cpf, String matricula) {
         super(nome, cpf);
@@ -17,7 +17,12 @@ public class Aluno extends Usuario {
     }
 
     @Override
-    public void exibirDados() { 
-        System.out.println("Aluno: " + nome + " | CPF: " + cpf + " | Matricula; " + matricula);
+    public String exibirDados() { 
+        return "Aluno: " + nome + " | CPF: " + cpf + " | Matricula; " + matricula;
+    }
+
+    @Override
+    public double taxaMulta(int diasAtraso){
+        return diasAtraso * 0.5;
     }
 }
