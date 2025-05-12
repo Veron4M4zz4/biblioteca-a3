@@ -4,18 +4,32 @@ import java.util.Scanner;
 import java.util.ArrayList;
 public class GerenciadorUsuarios {
     private static int qtdLivros=0;
+    private ArrayList<Usuario> nomes;
+    private Scanner leitor;
     
-    Scanner leitor = new Scanner(System.in);
-    ArrayList<Usuario> nomes = new ArrayList<>();
-
     public GerenciadorUsuarios(){
-        //"i"Ler quantos livros seram adicionados ao ArrayList de usuario
-        int i = leitor.nextInt();
-        for(int cont = 0 ; cont < i; cont++){
-            nomes.add(new Usuario(leitor.nextLine(),leitor.nextLine(),leitor.nextLine(),leitor.nextLine(),leitor.nextLine()));
-            qtdLivros ++;
-        }
+        nomes = new ArrayList<>();
+        leitor = new Scanner(System.in);
+        System.out.println("SE QUISER PARAR DEIXE NOME VAZIO.");
         
+        while(true){
+            System.out.println("----------------------------------");
+            System.out.println("nome: ");
+            String aux_nome = leitor.nextLine();
+            if (aux_nome.isEmpty()){
+                break;
+            }
+            System.out.println("cpf: ");
+            String aux_cpf = leitor.nextLine();
+            System.out.println("email: ");
+            String aux_email = leitor.nextLine();
+            System.out.println("telefone: ");
+            String aux_telefone = leitor.nextLine();
+            System.out.println("tipo: ");
+            String aux_tipo = leitor.nextLine();
+            nomes.add(new Usuario(aux_nome,aux_cpf,aux_email,aux_telefone,aux_tipo));
+            qtdLivros ++;
+        }   
     }
 
     public void UsuariosCadastrados(){
@@ -31,12 +45,6 @@ public class GerenciadorUsuarios {
     }
     public static void setQtdLivros(int qtdLivros) {
         GerenciadorUsuarios.qtdLivros = qtdLivros;
-    }
-    public Scanner getLeitor() {
-        return leitor;
-    }
-    public void setLeitor(Scanner leitor) {
-        this.leitor = leitor;
     }
     public ArrayList<Usuario> getNomes() {
         return nomes;
