@@ -7,6 +7,7 @@ public class Main {
         System.out.println("----------------------------------------------------");
         GerenciadorUsuarios gu = new GerenciadorUsuarios();
         gu.UsuariosCadastrados();
-        System.out.println("AAAA");
+        gu.AdicionarUsuarios();
+
     }
 }

@@ -31,6 +31,28 @@ public class GerenciadorUsuarios {
             qtdLivros ++;
         }   
     }
+    
+    public void AdicionarUsuarios(){
+        System.out.println("SE QUISER PARAR DEIXE NOME VAZIO.");
+        while(true){
+            System.out.println("----------------------------------");
+            System.out.println("nome: ");
+            String aux_nome = leitor.nextLine();
+            if (aux_nome.isEmpty()){
+                break;
+            }
+            System.out.println("cpf: ");
+            String aux_cpf = leitor.nextLine();
+            System.out.println("email: ");
+            String aux_email = leitor.nextLine();
+            System.out.println("telefone: ");
+            String aux_telefone = leitor.nextLine();
+            System.out.println("tipo: ");
+            String aux_tipo = leitor.nextLine();
+            nomes.add(new Usuario(aux_nome,aux_cpf,aux_email,aux_telefone,aux_tipo));
+            qtdLivros ++;
+        }
+    }
 
     public void UsuariosCadastrados(){
         for(Usuario usuarioCadastrado: nomes){
