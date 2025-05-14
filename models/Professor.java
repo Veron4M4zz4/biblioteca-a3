@@ -18,7 +18,7 @@ public class Professor extends Usuario{
     
     @Override
     public String exibirDados() { 
-        return "Aluno: " + nome + " | CPF: " + cpf + " | Departamento; " + departamento;
+        return "Professor: " + nome + " | CPF: " + cpf + " | Departamento: " + departamento;
     }
 
     @Override
