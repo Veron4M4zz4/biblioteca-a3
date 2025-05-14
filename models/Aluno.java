@@ -18,7 +18,7 @@ public class Aluno extends Usuario {
 
     @Override
     public String exibirDados() { 
-        return "Aluno: " + nome + " | CPF: " + cpf + " | Matricula; " + matricula;
+        return "Aluno: " + nome + " | CPF: " + cpf + " | Matricula: " + matricula;
     }
 
     @Override
