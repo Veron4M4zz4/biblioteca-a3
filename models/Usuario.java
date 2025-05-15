@@ -9,8 +9,6 @@ public class Usuario {
     protected int limiteDeLivros;
     private boolean bloqueado = true;
 
-    
-
     public Usuario(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;

@@ -9,10 +9,13 @@ public class Main {
         System.out.println("----------------------------------------------------");
         Livro livro = new Livro();
         Date data = new Date(100,1,20);
+        /*GerenciadorUsuarios gu = GerenciadorUsuarios.getInstancia();
+        gu.UsuariosCadastrados();*/
 
-        GerenciadorEmprestimos GE = new GerenciadorEmprestimos(usuario1,livro,data);
-        GE.MotrarDados();
+        GerenciadorEmprestimos GE = GerenciadorEmprestimos.getInstancia(usuario1, livro, data);
+        GE.AdicionarEmprestimo();
+        GE.Devoluçao();
+        GE.Devoluçao();
         System.out.println("_______");
-
     }
 }

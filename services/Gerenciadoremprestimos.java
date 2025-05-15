@@ -40,16 +40,27 @@ public class GerenciadorEmprestimos{
         formato = new SimpleDateFormat("dd/MM/yyyy");
 
         while (true) {
-            String titulo = ler.nextLine();
 
+            System.out.println("T");
+            String titulo = ler.nextLine();
+            if (titulo.isEmpty()){
+                break;
+            }
+            System.out.println("A");
             String autor = ler.nextLine();
+            System.out.println("N");
             int numeroDePaginas = ler.nextInt();
+            ler.nextLine();
+            System.out.println("I");
             String isbn = ler.nextLine();
             livrosEmprestados.add(new Livro(titulo,autor,numeroDePaginas,isbn));
-
+            System.out.println("D");
             int dia = ler.nextInt();
+            System.out.println("M");
             int mes = ler.nextInt();
+            System.out.println("Ano");
             int ano = ler.nextInt() - 1900;
+            ler.nextLine();
 
             dataEmprestimo = new Date(ano,mes,dia);
             this.dataEmprestimo = formato.parse(formato.format(dataEmprestimo));
@@ -58,8 +69,47 @@ public class GerenciadorEmprestimos{
         }
     }
 
+    public void Devoluçao() {
+        ler = new Scanner(System.in);
+        
+        for (int i = 0; i < livrosEmprestados.size();i++){
+            System.out.println("Livro #" + (i + 1));
+            System.out.println(livrosEmprestados.get(i));
+            System.out.println("Data do Empréstimo: " + formato.format(listaDatas.get(i)));
+            System.out.println("---------------------------");
+        }
+        if (livrosEmprestados.isEmpty()){
+            System.out.println("SEM NENHUMA PENDENCIA!");
+        } else {
+            //Numero de livros que seram devolvidos|
+            int num = ler.nextInt();
+            if (num > livrosEmprestados.size()){
+                System.out.println("OCORREU UM ERRO!@NUMERO FORNECIDO ESTA FORA DO ESCOPO DA LISTA"
+                +"\nTente novamente...\n");
+            }
+            for (int i = 1; i < num; i++){
+                if (num == livrosEmprestados.size()){
+                    livrosEmprestados.clear();
+                    listaDatas.clear();
+                    break;
+                }
+                //index do livro que sera devolvido|
+                int remove = ler.nextInt() - 1;
+
+                livrosEmprestados.remove(remove);
+                listaDatas.remove(remove);
+                System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+            }
+        }
+    }
+
     public void  MotrarDados(){
-        System.out.println(dataEmprestimo);
+        for (int i = 0; i < livrosEmprestados.size();i++){
+        System.out.println("Livro #" + (i + 1));
+        System.out.println(livrosEmprestados.get(i));
+        System.out.println("Data do Empréstimo: " + formato.format(listaDatas.get(i)));
+        System.out.println("---------------------------");
+        }
     }
     
     public Date getDataEmprestimo() {
