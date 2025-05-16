@@ -1,7 +1,7 @@
 package models;
 
 public class Livro {
-    private String titulo;
+    protected String titulo;
     private String autor;
     private String isbn;
     private int numeroDePaginas;

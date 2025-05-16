@@ -5,10 +5,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Iterator;
 
 public class GerenciadorEmprestimos{
     private ArrayList<Livro> livrosEmprestados;
     private ArrayList<Date> listaDatas;
+    private Iterator<Livro> listaLivros;
     private Scanner ler;
     private Date dataEmprestimo;
     private SimpleDateFormat formato;
@@ -80,6 +82,7 @@ public class GerenciadorEmprestimos{
 
     public void Devoluçao() {
         ler = new Scanner(System.in); 
+        
         for (int i = 0; i < livrosEmprestados.size();i++){ //Mostrando os livros e as datas:
             System.out.println("Livro #" + (i + 1));
             System.out.println(livrosEmprestados.get(i));
@@ -95,7 +98,7 @@ public class GerenciadorEmprestimos{
             if (num > livrosEmprestados.size()){
                 System.out.println("OCORREU UM ERRO!@NUMERO FORNECIDO ESTA FORA DO ESCOPO DA LISTA"
                 +"\nTente novamente...\n");
-            }
+            } else {
             for (int i = 1; i <= num; i++){
                 if (num == livrosEmprestados.size()){  //se o numero passado coicidir com o tamanho do array, o array ficara vazio
                     livrosEmprestados.clear();
@@ -104,7 +107,7 @@ public class GerenciadorEmprestimos{
                     for(int o = 0; o < num; o++){
                         livrosEmprestados.get(o).setEmprestado(false); //tirando os TRUEs dos atributos EMPRESTADO dos livos
                     }
-                    break;
+                    return;
                 }
                 
                 int remove = ler.nextInt() - 1; //index do livro que sera devolvido
@@ -116,6 +119,22 @@ public class GerenciadorEmprestimos{
                 System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
             }
         }
+    }
+    }
+    public ArrayList<Livro> DevolverLivroNome(String tituloRemover){
+        ler = new Scanner(System.in);
+        listaLivros = livrosEmprestados.iterator();
+        int e = 0;
+
+        while (listaLivros.hasNext()) { //Usando iterator para percorrer a lista, evita que de o erro IndexOutOfBoundsException
+            Livro analiseLivro = listaLivros.next(); //pega os elemenotos do array e o percorre
+            if (analiseLivro.getTitulo().equals(tituloRemover)){
+                listaLivros.remove();
+                listaDatas.remove(e);
+            }
+            e++;
+        }
+        return livrosEmprestados;
     }
 
     public void  MotrarDados(){
@@ -135,7 +154,30 @@ public class GerenciadorEmprestimos{
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    @Override
+    public ArrayList<Livro> getLivrosEmprestados() {
+        return livrosEmprestados;
+    }
+
+    public void setLivrosEmprestados(ArrayList<Livro> livrosEmprestados) {
+        this.livrosEmprestados = livrosEmprestados;
+    }
+
+    public ArrayList<Date> getListaDatas() {
+        return listaDatas;
+    }
+
+    public void setListaDatas(ArrayList<Date> listaDatas) {
+        this.listaDatas = listaDatas;
+    }
+
+    public SimpleDateFormat getFormato() {
+        return formato;
+    }
+
+    public void setFormato(SimpleDateFormat formato) {
+        this.formato = formato;
+    }
+     @Override
     public String toString() {
         return "GetenciadorEmprestimos [dataEmprestimo=" + dataEmprestimo + ", usuario=" + usuario + ", livro=" + livro
                 + "]";
