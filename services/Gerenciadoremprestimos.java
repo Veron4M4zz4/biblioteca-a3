@@ -29,7 +29,7 @@ public class GerenciadorEmprestimos {
         this.usuario = usuario;
         this.livro = livro;
         livro.setEmprestado(true);
-
+        
         livrosEmprestados.add(livro);
         listaDatas.add(dataEmprestimo);
     }
@@ -134,7 +134,7 @@ public class GerenciadorEmprestimos {
 
         while (listaLivros.hasNext()) { // Usando iterator para percorrer a lista, evita que de o erro
                                         // IndexOutOfBoundsException
-            Livro analiseLivro = listaLivros.next(); // pega os elemenotos do array e o percorre
+            Livro analiseLivro = listaLivros.next(); // Pega os elemenotos do array e o percorre
             if (analiseLivro.getTitulo().equals(tituloRemover)) {
                 listaLivros.remove();
                 listaDatas.remove(e);
