@@ -1,42 +1,44 @@
 package models;
 
+import java.util.regex.Pattern;
+
 public class Livro {
-    protected String titulo;
-    private String autor;
-    private String isbn;
-    private int numeroDePaginas;
+    protected String titulo; //tratado
+    private String autor; //tratado
+    private String isbn; //tratado 
+    private int numeroDePaginas; //tratado
     private boolean emprestado;
 
     public Livro() {
-        this("Título Desconhecido", "Autor Desconhecido", 0, "ISBN Desconhecido");
+        this("Título Desconhecido", "Autor Desconhecido", 0, "0000000000000");
     }
 
     public Livro(String titulo, String autor) {
-        this.titulo = titulo;
-        this.autor = autor;
+        setTitulo(titulo);
+        setAutor(autor);
     }
 
     public Livro(String titulo, String autor, int numeroDePaginas) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.numeroDePaginas = numeroDePaginas;
+        setTitulo(titulo);
+        setAutor(autor);
+        setNumeroDePaginas(numeroDePaginas);
     }
 
     public Livro(String titulo, String autor, int numeroDePaginas, String isbn) {
-        this.titulo = titulo;
-        this.autor = autor;
+        setTitulo(titulo);
+        setAutor(autor);
+        setNumeroDePaginas(numeroDePaginas);
         setIsbn(isbn);
-        this.numeroDePaginas = numeroDePaginas;
     }
 
     public void emprestar() {
         this.emprestado = true;
-        System.out.println("livro " + this.titulo + " emprestado.");
+        System.out.println("Livro \"" + this.titulo + "\" emprestado.");
     }
 
     public void devolver() {
         this.emprestado = false;
-        System.out.println("livro " + this.titulo + " devolvido.");
+        System.out.println("Livro \"" + this.titulo + "\" devolvido.");
     }
 
     public String getTitulo() {
@@ -60,23 +62,33 @@ public class Livro {
     }
 
     public void setTitulo(String titulo) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Título não pode ser nulo ou vazio.");
+        }
         this.titulo = titulo;
     }
 
     public void setAutor(String autor) {
+        if (autor == null || autor.trim().isEmpty()) {
+            throw new IllegalArgumentException("Autor não pode ser nulo ou vazio.");
+        }
+        if (!Pattern.matches("^[A-Za-zÀ-ÿ\\s]+$", autor)) {
+            throw new IllegalArgumentException("Autor inválido. Deve conter apenas letras e espaços, sem números ou caracteres especiais.");
+        }
         this.autor = autor;
     }
 
     public void setIsbn(String isbn) {
-        if (isbn != null && isbn.length() == 13) {
-            this.isbn = isbn;
-        } else {
-            System.out.println("ISBN inválido. Deve ter 13 caracteres");
+        if (isbn == null || !isbn.matches("\\d{13}")) {
+            throw new IllegalArgumentException("ISBN inválido. Deve conter exatamente 13 dígitos numéricos.");
         }
-
+        this.isbn = isbn;
     }
 
     public void setNumeroDePaginas(int numeroDePaginas) {
+        if (numeroDePaginas <= 0) {
+            throw new IllegalArgumentException("Número de páginas deve ser maior que zero.");
+        }
         this.numeroDePaginas = numeroDePaginas;
     }
 
@@ -86,8 +98,7 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro [titulo=" + titulo + ", autor=" + autor + ", isbn=" + isbn + ", numeroDePaginas="
-                + numeroDePaginas + ", emprestado=" + emprestado + "]";
+        return "Livro [titulo=" + titulo + ", autor=" + autor + ", isbn=" + isbn
+                + ", numeroDePaginas=" + numeroDePaginas + ", emprestado=" + emprestado + "]";
     }
-
 }
