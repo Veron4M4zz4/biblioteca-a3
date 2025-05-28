@@ -7,10 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Iterator;
+import java.util.List;
 
 public class GerenciadorEmprestimos {
-    private ArrayList<Livro> livrosEmprestados;
-    private ArrayList<Date> listaDatas;
+    private List<Livro> livrosEmprestados;
+    private List<Date> listaDatas;
     private Iterator<Livro> listaLivros;
     private Scanner ler;
     private Date dataEmprestimo;
@@ -127,7 +128,7 @@ public class GerenciadorEmprestimos {
         }
     }
 
-    public ArrayList<Livro> DevolverLivroNome(String tituloRemover) {
+    public List<Livro> DevolverLivroNome(String tituloRemover) {
         ler = new Scanner(System.in);
         listaLivros = livrosEmprestados.iterator();
         int e = 0;
@@ -161,7 +162,7 @@ public class GerenciadorEmprestimos {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public ArrayList<Livro> getLivrosEmprestados() {
+    public List<Livro> getLivrosEmprestados() {
         return livrosEmprestados;
     }
 
@@ -169,7 +170,7 @@ public class GerenciadorEmprestimos {
         this.livrosEmprestados = livrosEmprestados;
     }
 
-    public ArrayList<Date> getListaDatas() {
+    public List<Date> getListaDatas() {
         return listaDatas;
     }
 

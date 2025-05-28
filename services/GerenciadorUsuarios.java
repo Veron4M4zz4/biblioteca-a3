@@ -2,11 +2,15 @@ package services;
 
 import models.*;
 import java.util.Scanner;
+
+import dao.DataBaseHelper;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class GerenciadorUsuarios {
-    private ArrayList<Usuario> nomes;
+    private List<Usuario> nomes;
     private Iterator<Usuario> listaNomes;
     private Scanner leitor;
     private static GerenciadorUsuarios instancia;
@@ -99,12 +103,12 @@ public class GerenciadorUsuarios {
 
             System.out.println("tipo: ");
             String aux_tipo = leitor.nextLine();
-            
+
             nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
         }
     }
 
-    public ArrayList<Usuario> RemoverUsuarioNome(String usuarioNome) {
+    public List<Usuario> RemoverUsuarioNome(String usuarioNome) {
         leitor = new Scanner(System.in);
         listaNomes = nomes.iterator();
 
@@ -116,6 +120,14 @@ public class GerenciadorUsuarios {
             }
         }
         return nomes;
+    }
+
+    public void SalvarUsuarioNoBanco() {
+        DataBaseHelper databaseHelper = new DataBaseHelper();
+        for (Usuario usuarios : nomes) {
+            databaseHelper.adicionarUsuario(usuarios);
+        }
+        System.out.println("Todos usuarios salvos no banco de dados!");
     }
 
     public void UsuariosCadastrados() {
