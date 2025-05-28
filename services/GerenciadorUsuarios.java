@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GerenciadorUsuarios {
-<<<<<<< HEAD
-=======
-    private static int qtdLivros = 0;
->>>>>>> b12750f (:sparkles: fixed some errors)
     private ArrayList<Usuario> nomes;
     private Iterator<Usuario> listaNomes;
     private Scanner leitor;
