@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import dao.DataBaseHelper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -122,8 +123,9 @@ public class GerenciadorUsuarios {
         return nomes;
     }
 
-    public void SalvarUsuarioNoBanco() {
+    public void SalvarUsuarioNoBanco() throws SQLException {
         DataBaseHelper databaseHelper = new DataBaseHelper();
+        databaseHelper.CriarTabelaUsuario();
         for (Usuario usuarios : nomes) {
             databaseHelper.adicionarUsuario(usuarios);
         }

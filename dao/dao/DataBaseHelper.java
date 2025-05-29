@@ -8,14 +8,14 @@ import java.util.List;
 public class DataBaseHelper {
     private static final String URL = "jdbc:sqlite:ITAU.db";
 
-    public static void CriarTabelaUsuario() throws SQLException {
+    public void CriarTabelaUsuario() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS USUARIO (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome TEXT NOT NULL," +
                 "cpf TEXT NOT NULL," +
                 "email TEXT," +
                 "telefone TEXT," +
-                "tipo TEXT," +
+                "tipo TEXT" +
                 ");";
 
         try (Connection conn = DriverManager.getConnection(URL)) {
