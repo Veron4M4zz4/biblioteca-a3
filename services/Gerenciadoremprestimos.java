@@ -5,20 +5,24 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.List;
 
 public class GerenciadorEmprestimos {
+    Scanner ler = new Scanner(System.in);
     private List<Livro> livrosEmprestados;
     private List<Date> listaDatas;
     private Iterator<Livro> listaLivros;
-    private Scanner ler;
     private Date dataEmprestimo;
     private SimpleDateFormat formato;
     private Usuario usuario;
     private Livro livro;
     private static GerenciadorEmprestimos instancia;
+    
 
     private GerenciadorEmprestimos(Usuario usuario, Livro livro, Date dataEmprestimo) throws ParseException {
         formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -44,108 +48,104 @@ public class GerenciadorEmprestimos {
 
     }
 
-    public void AdicionarEmprestimo() throws ParseException {
-        ler = new Scanner(System.in);
+    public void AdicionarEmprestimo() {
         formato = new SimpleDateFormat("dd/MM/yyyy");
 
         while (true) {
-            System.out.println("Titulo");
+            System.out.print("Titulo (vazio para sair): ");
             String titulo = ler.nextLine();
             if (titulo.isEmpty()) {
                 break;
             }
-            System.out.println("AUtor");
+            System.out.print("Autor: ");
             String autor = ler.nextLine();
 
-            System.out.println("Numero De Paginas");
-            int numeroDePaginas = ler.nextInt();
-            ler.nextLine();
+            
+            int numeroDePaginas;
+            while (true) { 
+                System.out.print("Número de Páginas: ");
+                try{
+                    numeroDePaginas = ler.nextInt();
+                    ler.nextLine();
+                    break;
+                }catch(InputMismatchException e){
+                    System.out.println("ERRO!! Por favor, digite um número inteiro válido.");
+                    ler.nextLine();
+                }
 
-            System.out.println("ISBN");
+            }
+
+            System.out.print("ISBN: ");
             String isbn = ler.nextLine();
 
-            livrosEmprestados.add(new Livro(titulo, autor, numeroDePaginas, isbn));
-            livro.setEmprestado(true);
+            while (true) { 
+                System.out.print("Data de Empréstimo: (dd/MM/yyyy): ");
+                String sData = ler.nextLine();
+                try {
+                    dataEmprestimo = formato.parse(sData);
+                    break;
+                } catch (ParseException e) {
+                    System.out.println("Formato inválido!! Use (dd/MM/yyyy).");
 
-            System.out.println("DIA");
-            int dia = ler.nextInt();
-
-            System.out.println("MES");
-            int mes = ler.nextInt();
-
-            System.out.println("Ano");
-            int ano = ler.nextInt() - 1900;
-            ler.nextLine();
-
-            dataEmprestimo = new Date(ano, mes, dia);
-            this.dataEmprestimo = formato.parse(formato.format(dataEmprestimo));
+                }
+            }
+            Livro novoLivro = new Livro(titulo, autor, numeroDePaginas, isbn);
+            novoLivro.setEmprestado(true);
+            livrosEmprestados.add(novoLivro);
             listaDatas.add(dataEmprestimo);
 
         }
     }
 
-    public void Devoluçao() {
-        ler = new Scanner(System.in);
+        public void Devolucao() {
+        
+            if (livrosEmprestados.isEmpty()) {
+                System.out.println("Sem nenhuma pendência!");
+                return;
+            }
 
-        for (int i = 0; i < livrosEmprestados.size(); i++) { // Mostrando os livros e as datas:
-            System.out.println("Livro #" + (i + 1));
-            System.out.println(livrosEmprestados.get(i));
-            System.out.println("Data do Empréstimo: " + formato.format(listaDatas.get(i)));
-            System.out.println("---------------------------");
-        }
-        if (livrosEmprestados.isEmpty()) { // verificando se a lista não esta vazia
-            System.out.println("SEM NENHUMA PENDENCIA!");
-        } else {
+            // Mostrar os livros emprestados com números
+            System.out.println("Livros emprestados:");
+            for (int i = 0; i < livrosEmprestados.size(); i++) {
+                System.out.println((i + 1) + " - " + livrosEmprestados.get(i).getTitulo());
+            }
 
-            int num = ler.nextInt(); // Numeros de livros devolvidos
+            System.out.print("Quantos livros deseja devolver? ");
+            int num = ler.nextInt();
+            ler.nextLine();  
 
-            if (num > livrosEmprestados.size()) {
-                System.out.println("OCORREU UM ERRO!@NUMERO FORNECIDO ESTA FORA DO ESCOPO DA LISTA"
-                        + "\nTente novamente...\n");
-            } else {
-                for (int i = 1; i <= num; i++) {
-                    if (num == livrosEmprestados.size()) { // se o numero passado coicidir com o tamanho do array, o
-                                                           // array ficara vazio
-                        livrosEmprestados.clear();
-                        listaDatas.clear();
+            while (num < 1 || num > livrosEmprestados.size()) {
+                System.out.println("Número inválido! Tente novamente.");
+                System.out.print("Quantos livros deseja devolver? ");
+                num = ler.nextInt();
+            }
 
-                        for (int o = 0; o < num; o++) {
-                            livrosEmprestados.get(o).setEmprestado(false); // tirando os TRUEs dos atributos EMPRESTADO
-                                                                           // dos livos
-                        }
-                        return;
-                    }
+            List<Integer> indicesParaRemover = new ArrayList<>();
 
-                    int remove = ler.nextInt() - 1; // index do livro que sera devolvido
+            for (int devolucao = 1; devolucao <= num; devolucao++) {
+                System.out.print("Escolha o nº do livro para devolver: ");
+                int escolha = ler.nextInt();
+                ler.nextLine();     
 
-                    livrosEmprestados.remove(remove);
-                    listaDatas.remove(remove);
-                    livrosEmprestados.get(i).setEmprestado(false);
-
-                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+                while (escolha < 1 || escolha > livrosEmprestados.size() || indicesParaRemover.contains(escolha - 1)) {
+                    System.out.print("Número inválido ou já escolhido. Digite outro nº: ");
+                    escolha = ler.nextInt();
                 }
+                indicesParaRemover.add(escolha - 1);
+            }
+
+            // Remover do maior índice para o menor para evitar deslocamento
+            indicesParaRemover.sort(Collections.reverseOrder());
+            for (int idx : indicesParaRemover) {
+                livrosEmprestados.get(idx).setEmprestado(false);
+                livrosEmprestados.remove(idx);
+                listaDatas.remove(idx);
+                System.out.println("Livro devolvido com sucesso!");
             }
         }
-    }
 
-    public List<Livro> DevolverLivroNome(String tituloRemover) {
-        ler = new Scanner(System.in);
-        listaLivros = livrosEmprestados.iterator();
-        int e = 0;
 
-        while (listaLivros.hasNext()) { // Usando iterator para percorrer a lista, evita que de o erro
-                                        // IndexOutOfBoundsException
-            Livro analiseLivro = listaLivros.next(); // Pega os elemenotos do array e o percorre
-            if (analiseLivro.getTitulo().equals(tituloRemover)) {
-                listaLivros.remove();
-                listaDatas.remove(e);
-            }
-            e++;
-        }
-        return livrosEmprestados;
-    }
-
-    public void MotrarDados() {
+    public void MostrarDados() {
         for (int i = 0; i < livrosEmprestados.size(); i++) {
             System.out.println("Livro #" + (i + 1));
             System.out.println(livrosEmprestados.get(i));
@@ -153,42 +153,67 @@ public class GerenciadorEmprestimos {
             System.out.println("---------------------------");
         }
     }
-
-    public Date getDataEmprestimo() {
-        return dataEmprestimo;
-    }
-
-    public void setDataEmprestimo(Date dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-    public List<Livro> getLivrosEmprestados() {
-        return livrosEmprestados;
-    }
-
-    public void setLivrosEmprestados(ArrayList<Livro> livrosEmprestados) {
+public void setLivrosEmprestados(List<Livro> livrosEmprestados) {
         this.livrosEmprestados = livrosEmprestados;
     }
 
-    public List<Date> getListaDatas() {
-        return listaDatas;
-    }
-
-    public void setListaDatas(ArrayList<Date> listaDatas) {
+    public void setListaDatas(List<Date> listaDatas) {
         this.listaDatas = listaDatas;
     }
 
-    public SimpleDateFormat getFormato() {
-        return formato;
+    public Iterator<Livro> getListaLivros() {
+        return listaLivros;
     }
 
-    public void setFormato(SimpleDateFormat formato) {
-        this.formato = formato;
+    public void setListaLivros(Iterator<Livro> listaLivros) {
+        this.listaLivros = listaLivros;
+    }
+
+    public Scanner getLer() {
+        return ler;
+    }
+
+    public void setLer(Scanner ler) {
+        this.ler = ler;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public static GerenciadorEmprestimos getInstancia() {
+        return instancia;
+    }
+
+    public static void setInstancia(GerenciadorEmprestimos instancia) {
+        GerenciadorEmprestimos.instancia = instancia;
     }
 
     @Override
     public String toString() {
-        return "GetenciadorEmprestimos [dataEmprestimo=" + dataEmprestimo + ", usuario=" + usuario + ", livro=" + livro
-                + "]";
+        StringBuilder sb = new StringBuilder();
+        sb.append("GerenciadorEmprestimos{");
+        sb.append("livrosEmprestados=").append(livrosEmprestados);
+        sb.append(", listaDatas=").append(listaDatas);
+        sb.append(", listaLivros=").append(listaLivros);
+        sb.append(", ler=").append(ler);
+        sb.append(", dataEmprestimo=").append(dataEmprestimo);
+        sb.append(", formato=").append(formato);
+        sb.append(", usuario=").append(usuario);
+        sb.append(", livro=").append(livro);
+        sb.append('}');
+        return sb.toString();
     }
 }
