@@ -1,6 +1,10 @@
 package models;
 
 import java.util.regex.Pattern;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class Livro {
     protected String titulo; //tratado
@@ -8,6 +12,9 @@ public class Livro {
     private String isbn; //tratado 
     private int numeroDePaginas; //tratado
     private boolean emprestado;
+    private Date dataCriacao;
+    private Date dataDevolucao;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy");
 
     public Livro() {
         this("Título Desconhecido", "Autor Desconhecido", 0, "0000000000000");
@@ -29,6 +36,18 @@ public class Livro {
         setAutor(autor);
         setNumeroDePaginas(numeroDePaginas);
         setIsbn(isbn);
+        this.dataCriacao = new Date();// 
+        Calender cal = Calender.getInstance();
+        cal.setTime(dataCriacao);
+        cal.add(Calendar.DAY_OF_MONTH, 14);
+        this.dataDevolucao = cal.getTIME();
+        System.out.println("Livro criado em: " + sdf.format(this.dataCriacao));
+        System.out.println("Data Prevista para Devolução: " + sdf.format(this.dataDevolucao));
+        
+
+        
+
+
     }
 
     public void emprestar() {
