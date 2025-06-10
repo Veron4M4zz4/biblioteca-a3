@@ -17,6 +17,12 @@ public class Main {
         //gu.AdicionarUsuario();
         gu.SalvarUsuarioNoBanco();
 
+
+        Professor usuario2 = new Usuario(null, null, null, null, null);
+
+        //usuario - nome, 
+
+
         /*GerenciadorEmprestimos GE = GerenciadorEmprestimos.getInstancia(usuario1, livro, data);
         GE.AdicionarEmprestimo();
         GE.Devoluçao();

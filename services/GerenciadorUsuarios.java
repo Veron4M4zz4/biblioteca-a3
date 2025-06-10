@@ -56,10 +56,8 @@ public class GerenciadorUsuarios {
         leitor = new Scanner(System.in);
         int numRemover = leitor.nextInt();
 
-        for (int p = 0; p < nomes.size(); p++) {
-            System.out.println("Usuario #" + (p + 1));
-            System.out.println(nomes.get(p));
-        }
+        UsuariosCadastrados();
+
         if (numRemover > nomes.size()) {
             System.out.println("ERRO!@ NUMERO INFORMADO É MAIOR QUE O ESCOPO NA LISTA DE USUARIOS!!!");
         } else {
@@ -76,10 +74,9 @@ public class GerenciadorUsuarios {
                 nomes.remove(indexRemover);
 
                 System.out.println("-==-==-==-==-==-==-==-==-==-==-");
-                for (int o = 0; o < nomes.size(); o++) {
-                    System.out.println("Usuario #" + (o + 1));
-                    System.out.println(nomes.get(o));
-                }
+
+                UsuariosCadastrados();
+
             }
         }
     }
@@ -90,9 +87,11 @@ public class GerenciadorUsuarios {
             System.out.println("----------------------------------");
             System.out.println("nome: ");
             String aux_nome = leitor.nextLine();
+
             if (aux_nome.isEmpty()) {
                 break;
             }
+
             System.out.println("cpf: ");
             String aux_cpf = leitor.nextLine();
 
@@ -126,10 +125,11 @@ public class GerenciadorUsuarios {
     public void SalvarUsuarioNoBanco() throws SQLException {
         DataBaseHelper databaseHelper = new DataBaseHelper();
         databaseHelper.CriarTabelaUsuario();
-        for (Usuario usuarios : nomes) {
-            databaseHelper.adicionarUsuario(usuarios);
+        for(Usuario usuario: nomes){
+            databaseHelper.AdicionarUsuario(usuario);
         }
-        System.out.println("Todos usuarios salvos no banco de dados!");
+        System.out.println("Usuario adicionado com sucesso!");
+        
     }
 
     public void UsuariosCadastrados() {

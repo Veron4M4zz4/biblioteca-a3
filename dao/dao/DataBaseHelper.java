@@ -29,7 +29,7 @@ public class DataBaseHelper {
 
     }
 
-    public void adicionarUsuario(Usuario usuario) {
+    public void AdicionarUsuario(Usuario usuario) {
         String sql = "INSERT INTO USUARIO (nome,cpf,email,telefone,tipo) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(URL);
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -64,5 +64,21 @@ public class DataBaseHelper {
             System.out.println("Erro ao listar os usuários: " + e.getMessage());
         }
         return usuarios;
+    }
+
+    public void DeletarUsuario(int id) throws SQLException {
+        String sql = "DELETE * WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL);
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("O Usuario foi deletado com sucesso!");
+            } else {
+                System.out.println("Nenhum Usuario deletado. Verifique se o ID existe.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar usuario: " + e.getMessage());
+        }
     }
 }

@@ -37,16 +37,12 @@ public class Livro {
         setNumeroDePaginas(numeroDePaginas);
         setIsbn(isbn);
         this.dataCriacao = new Date();// 
-        Calender cal = Calender.getInstance();
+        Calendar cal = Calendar.getInstance();
         cal.setTime(dataCriacao);
         cal.add(Calendar.DAY_OF_MONTH, 14);
-        this.dataDevolucao = cal.getTIME();
+        this.dataDevolucao = cal.getTime();
         System.out.println("Livro criado em: " + sdf.format(this.dataCriacao));
         System.out.println("Data Prevista para Devolução: " + sdf.format(this.dataDevolucao));
-        
-
-        
-
 
     }
 
@@ -80,8 +76,9 @@ public class Livro {
         return emprestado;
     }
 
+    //tratamento de string 
     public void setTitulo(String titulo) {
-        if (titulo == null || titulo.trim().isEmpty()) {
+        if (titulo == null || titulo.trim().isEmpty()) { //trim corta espaço, isEmpty
             throw new IllegalArgumentException("Título não pode ser nulo ou vazio.");
         }
         this.titulo = titulo;
@@ -90,7 +87,7 @@ public class Livro {
     public void setAutor(String autor) {
         if (autor == null || autor.trim().isEmpty()) {
             throw new IllegalArgumentException("Autor não pode ser nulo ou vazio.");
-        }
+        }   //se for diferente da sintaxe 
         if (!Pattern.matches("^[A-Za-zÀ-ÿ\\s]+$", autor)) {
             throw new IllegalArgumentException("Autor inválido. Deve conter apenas letras e espaços, sem números ou caracteres especiais.");
         }
@@ -105,7 +102,7 @@ public class Livro {
     }
 
     public void setNumeroDePaginas(int numeroDePaginas) {
-        if (numeroDePaginas <= 0) {
+        if (numeroDePaginas <= 0) { //menor ou igual a zero
             throw new IllegalArgumentException("Número de páginas deve ser maior que zero.");
         }
         this.numeroDePaginas = numeroDePaginas;

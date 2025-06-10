@@ -38,7 +38,7 @@ public class GerenciadorEmprestimos {
         livrosEmprestados.add(livro);
         listaDatas.add(dataEmprestimo);
     }
-
+    // proibe de usar o construtor mais de uma vez
     public static GerenciadorEmprestimos getInstancia(Usuario usuario, Livro livro, Date dataEmprestimo)
             throws ParseException {
         if (instancia == null) {
@@ -114,7 +114,7 @@ public class GerenciadorEmprestimos {
             int num = ler.nextInt();
             ler.nextLine();  
 
-            while (num < 1 || num > livrosEmprestados.size()) {
+            while (num < 1 || num > livrosEmprestados.size()) { //se num menor que 1 ou num maior que o tamanho da lista de livros
                 System.out.println("Número inválido! Tente novamente.");
                 System.out.print("Quantos livros deseja devolver? ");
                 num = ler.nextInt();

@@ -25,7 +25,7 @@ public class Usuario {
         setCpf(cpf);
         setEmail(email);
         setTelefone(telefone);
-        this.tipo = tipo.toLowerCase();
+        this.tipo = tipo.toLowerCase(); //para letra caixa baixa, ou seja tudo minusculo
 
         if(tipo.equalsIgnoreCase("Estudante")){
             this.limiteDeLivros = 3;
@@ -47,7 +47,7 @@ public class Usuario {
     }
 
     public double taxaMulta(int diasAtraso) {
-        return diasAtraso * 1.0;
+        return diasAtraso * 1.0; 
     }
 
     public String getNome() {
