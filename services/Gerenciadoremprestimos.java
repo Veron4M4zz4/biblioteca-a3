@@ -1,9 +1,8 @@
 package services;
 
 import models.*;
-import java.util.Date;
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Collections;
@@ -13,44 +12,86 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GerenciadorEmprestimos {
-    Scanner ler = new Scanner(System.in);
+    private Scanner ler;
     private List<Livro> livrosEmprestados;
-    private List<Date> listaDatas;
     private Iterator<Livro> listaLivros;
-    private Date dataEmprestimo;
-    private SimpleDateFormat formato;
     private Usuario usuario;
     private Livro livro;
     private static GerenciadorEmprestimos instancia;
     
 
-    private GerenciadorEmprestimos(Usuario usuario, Livro livro, Date dataEmprestimo) throws ParseException {
-        formato = new SimpleDateFormat("dd/MM/yyyy");
+    private GerenciadorEmprestimos(Usuario usuario, Livro livro) {
         livrosEmprestados = new ArrayList<Livro>();
-        listaDatas = new ArrayList<Date>();
-
-        this.dataEmprestimo = formato.parse(formato.format(dataEmprestimo));
 
         this.usuario = usuario;
         this.livro = livro;
         livro.setEmprestado(true);
         
         livrosEmprestados.add(livro);
-        listaDatas.add(dataEmprestimo);
     }
-    // proibe de usar o construtor mais de uma vez
-    public static GerenciadorEmprestimos getInstancia(Usuario usuario, Livro livro, Date dataEmprestimo)
-            throws ParseException {
-        if (instancia == null) {
-            instancia = new GerenciadorEmprestimos(usuario, livro, dataEmprestimo);
-        }
-        return instancia;
 
+    private GerenciadorEmprestimos(Usuario usuario) {
+    ler = new Scanner(System.in);
+    this.usuario = usuario;
+
+    while (true) {
+        System.out.print("Título para buscar (vazio para sair): ");
+        String termoBusca = ler.nextLine();
+        if (termoBusca.isEmpty()) break;
+
+        try {
+            GoogleBooksService googleBooksService = new GoogleBooksService(); 
+            List<Livro> resultados = googleBooksService.buscarLivro(termoBusca);
+
+            if (resultados.isEmpty()) {
+                System.out.println("Nenhum livro encontrado.");
+                continue;
+            }
+
+            System.out.println("Resultados encontrados:");
+            for (int i = 0; i < resultados.size(); i++) {
+                Livro l = resultados.get(i);
+                System.out.println((i + 1) + " - " + l.getTitulo() + " | " + l.getAutor());
+            }
+
+            System.out.print("Escolha o número do livro que deseja emprestar: ");
+            int escolha = ler.nextInt();
+            ler.nextLine();
+
+            if (escolha < 1 || escolha > resultados.size()) {
+                System.out.println("Escolha inválida.");
+                continue;
+            }
+
+            Livro livroEscolhido = resultados.get(escolha - 1);
+            livroEscolhido.setEmprestado(true);
+            livrosEmprestados.add(livroEscolhido);
+            System.out.println("Livro emprestado com sucesso!");
+
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Erro ao buscar livro: " + e.getMessage());
+        }
     }
+}
+    
+
+    // proibe de usar o construtor mais de uma vez
+    public static GerenciadorEmprestimos getInstancia(Usuario usuario, Livro livro) throws ParseException {
+        if (livro == null){
+            if (instancia == null) {
+            instancia = new GerenciadorEmprestimos(usuario);
+        }else{
+        if (instancia == null) {
+            instancia = new GerenciadorEmprestimos(usuario, livro);
+        }
+        }
+    }
+        return instancia;
+}
+
 
     public void AdicionarEmprestimo() {
-        formato = new SimpleDateFormat("dd/MM/yyyy");
-
+        ler = new Scanner(System.in);
         while (true) {
             System.out.print("Titulo (vazio para sair): ");
             String titulo = ler.nextLine();
@@ -74,31 +115,18 @@ public class GerenciadorEmprestimos {
                 }
 
             }
-
             System.out.print("ISBN: ");
             String isbn = ler.nextLine();
 
-            while (true) { 
-                System.out.print("Data de Empréstimo: (dd/MM/yyyy): ");
-                String sData = ler.nextLine();
-                try {
-                    dataEmprestimo = formato.parse(sData);
-                    break;
-                } catch (ParseException e) {
-                    System.out.println("Formato inválido!! Use (dd/MM/yyyy).");
-
-                }
-            }
             Livro novoLivro = new Livro(titulo, autor, numeroDePaginas, isbn);
             novoLivro.setEmprestado(true);
             livrosEmprestados.add(novoLivro);
-            listaDatas.add(dataEmprestimo);
-
         }
     }
 
         public void Devolucao() {
-        
+            ler = new Scanner(System.in);
+
             if (livrosEmprestados.isEmpty()) {
                 System.out.println("Sem nenhuma pendência!");
                 return;
@@ -139,7 +167,6 @@ public class GerenciadorEmprestimos {
             for (int idx : indicesParaRemover) {
                 livrosEmprestados.get(idx).setEmprestado(false);
                 livrosEmprestados.remove(idx);
-                listaDatas.remove(idx);
                 System.out.println("Livro devolvido com sucesso!");
             }
         }
@@ -149,16 +176,11 @@ public class GerenciadorEmprestimos {
         for (int i = 0; i < livrosEmprestados.size(); i++) {
             System.out.println("Livro #" + (i + 1));
             System.out.println(livrosEmprestados.get(i));
-            System.out.println("Data do Empréstimo: " + formato.format(listaDatas.get(i)));
             System.out.println("---------------------------");
         }
     }
 public void setLivrosEmprestados(List<Livro> livrosEmprestados) {
         this.livrosEmprestados = livrosEmprestados;
-    }
-
-    public void setListaDatas(List<Date> listaDatas) {
-        this.listaDatas = listaDatas;
     }
 
     public Iterator<Livro> getListaLivros() {
@@ -206,11 +228,8 @@ public void setLivrosEmprestados(List<Livro> livrosEmprestados) {
         StringBuilder sb = new StringBuilder();
         sb.append("GerenciadorEmprestimos{");
         sb.append("livrosEmprestados=").append(livrosEmprestados);
-        sb.append(", listaDatas=").append(listaDatas);
         sb.append(", listaLivros=").append(listaLivros);
         sb.append(", ler=").append(ler);
-        sb.append(", dataEmprestimo=").append(dataEmprestimo);
-        sb.append(", formato=").append(formato);
         sb.append(", usuario=").append(usuario);
         sb.append(", livro=").append(livro);
         sb.append('}');

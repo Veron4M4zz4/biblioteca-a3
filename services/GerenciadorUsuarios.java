@@ -65,8 +65,6 @@ public class GerenciadorUsuarios {
                     System.out.println("Telefone inválido! Deve ter 12 dígitos.");
                 }
             }
-
-
             while (true) { 
                 System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
                 System.out.println();
@@ -83,8 +81,8 @@ public class GerenciadorUsuarios {
                         opcao = leitor.nextInt();
                     }
                 }
-            }
-           // nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
+                nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
+            } 
         }
 
     public static GerenciadorUsuarios getInstancia() {
