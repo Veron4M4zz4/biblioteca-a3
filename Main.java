@@ -1,9 +1,7 @@
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Date;
 import models.*;
 import services.*;
-import dao.*;
 public class Main {
     public static void main(String[] args) throws ParseException, SQLException {
         Usuario usuario1 = new Usuario("leo","12345678901","assa","123456789012","Professor");
@@ -18,7 +16,7 @@ public class Main {
         gu.SalvarUsuarioNoBanco();
 
 
-        Professor usuario2 = new Usuario(null, null, null, null, null);
+        Professor usuario2 = (Professor) new Usuario(null, null, null, null, null);
 
         //usuario - nome, 
 

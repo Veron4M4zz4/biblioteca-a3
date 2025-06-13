@@ -1,20 +1,23 @@
 package services;
 
-import models.*;
-import java.util.Scanner;
-
 import dao.DataBaseHelper;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
+import models.*;
 
 public class GerenciadorUsuarios {
     private List<Usuario> nomes;
     private Iterator<Usuario> listaNomes;
     private Scanner leitor;
     private static GerenciadorUsuarios instancia;
+    private String aux_telefone;
+    private String aux_cpf;
+    private String aux_email;
+    private String aux_tipo;
+    private int opcao;
 
     private GerenciadorUsuarios() {
         nomes = new ArrayList<Usuario>();
@@ -29,21 +32,60 @@ public class GerenciadorUsuarios {
             if (aux_nome.isEmpty()) {
                 break;
             }
-            System.out.println("cpf: ");
-            String aux_cpf = leitor.nextLine();
+            while (true) { 
+                System.out.println("cpf: ");
+                String aux_cpf = leitor.nextLine();
+                if(aux_cpf.length() == 11){
+                    break;
+                }
+                else {
+                    System.out.println("CPF inválido! Deve ter 11 dígitos.");
+                }
+            }
 
-            System.out.println("email: ");
-            String aux_email = leitor.nextLine();
+            while (true) { 
+                System.out.println("email: ");
+                String aux_email = leitor.nextLine();
+                if(aux_email.contains("@")){
+                    break;
+                }
+                else {
+                    System.out.println("Email inválido! Deve conter '@'.");
+                }
+            }
 
-            System.out.println("telefone: ");
-            String aux_telefone = leitor.nextLine();
 
-            System.out.println("tipo: ");
-            String aux_tipo = leitor.nextLine();
+            while (true) { 
+                System.out.println("telefone: ");
+                aux_telefone = leitor.nextLine();
+                if(aux_telefone.length() == 12){
+                    break;
+                }
+                else {
+                    System.out.println("Telefone inválido! Deve ter 12 dígitos.");
+                }
+            }
 
-            nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
+
+            while (true) { 
+                System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
+                System.out.println();
+                opcao = leitor.nextInt();
+                
+                    if (opcao == 1) {
+                        aux_tipo = "Aluno";
+                        break;
+                    } else if (opcao == 2) {
+                        aux_tipo = "Professor";
+                        break;
+                    } else {
+                        System.out.println("Opção inválida! Digite 1 para Aluno ou 2 para Professor.");
+                        opcao = leitor.nextInt();
+                    }
+                }
+            }
+           // nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
         }
-    }
 
     public static GerenciadorUsuarios getInstancia() {
         if (instancia == null) {
@@ -92,19 +134,58 @@ public class GerenciadorUsuarios {
                 break;
             }
 
-            System.out.println("cpf: ");
-            String aux_cpf = leitor.nextLine();
+            while (true) { 
+                System.out.println("cpf: ");
+                String aux_cpf = leitor.nextLine();
+                if(aux_cpf.length() == 11){
+                    break;
+                }
+                else {
+                    System.out.println("CPF inválido! Deve ter 11 dígitos.");
+                }
+            }
 
-            System.out.println("email: ");
-            String aux_email = leitor.nextLine();
+            while (true) { 
+                System.out.println("email: ");
+                String aux_email = leitor.nextLine();
+                if(aux_email.contains("@")){
+                    break;
+                }
+                else {
+                    System.out.println("Email inválido! Deve conter '@'.");
+                }
+            }
 
-            System.out.println("telefone: ");
-            String aux_telefone = leitor.nextLine();
 
-            System.out.println("tipo: ");
-            String aux_tipo = leitor.nextLine();
+            while (true) { 
+                System.out.println("telefone: ");
+                aux_telefone = leitor.nextLine();
+                if(aux_telefone.length() == 12){
+                    break;
+                }
+                else {
+                    System.out.println("Telefone inválido! Deve ter 12 dígitos.");
+                }
+            }
 
-            nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
+            while (true) { 
+                System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
+                System.out.println();
+                opcao = leitor.nextInt();
+                if (opcao == 1) {
+                    aux_tipo = "Aluno";
+                    break;
+                } else if (opcao == 2) {
+                    aux_tipo = "Professor";
+                    break;
+                } else {
+                    System.out.println("Opção inválida! Digite 1 para Aluno ou 2 para Professor.");
+                    opcao = leitor.nextInt();
+                }
+            }
+            
+
+            //nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
         }
     }
 
