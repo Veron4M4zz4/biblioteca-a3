@@ -10,10 +10,7 @@ public class Main {
         //System.out.println("----------------------------------------------------");
         //Livro livro = new Livro();
         //Date data = new Date(100,1,20);
-        GerenciadorUsuarios gu = GerenciadorUsuarios.getInstancia();
-        //gu.UsuariosCadastrados();
-        //gu.AdicionarUsuario();
-        gu.SalvarUsuarioNoBanco();
+       
 
 
         Professor usuario2 = (Professor) new Usuario(null, null, null, null, null);
