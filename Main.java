@@ -27,7 +27,6 @@ public class Main {
         gu1.AdicionarUsuario();
         gu1.RemoverUsuario();
         gu1.RemoverUsuarioNome("Leo");
-        gu1.SalvarUsuarioNoBanco();
 
     }   
 }

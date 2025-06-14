@@ -18,7 +18,7 @@ public class GerenciadorUsuarios {
     private GerenciadorUsuarios() {
         nomes = new ArrayList<Usuario>();
         leitor = new Scanner(System.in);
-        System.out.println("SE QUISER PARAR DIGITE -1 NO NOME.");
+        System.out.println("SE QUISER PARAR DEIXE NOME VAZIO.");
 
         while (true) {
             String aux_cpf;
@@ -29,7 +29,7 @@ public class GerenciadorUsuarios {
 
             System.out.println("nome: ");
             String aux_nome = leitor.nextLine();
-            if (aux_nome ==  "-1") {
+            if (aux_nome.isEmpty()) {
                 break;
             }
             while (true) { 
@@ -67,8 +67,7 @@ public class GerenciadorUsuarios {
             }
             while (true) { 
                 System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
-                int opcao = leitor.nextInt();
-                leitor.nextLine();
+                int opcao = Integer.parseInt(leitor.nextLine());
                     if (opcao == 1) {
                         aux_tipo = "Aluno";
                         break;
@@ -130,7 +129,6 @@ public class GerenciadorUsuarios {
             System.out.println("----------------------------------");
             System.out.println("nome: ");
             String aux_nome = leitor.nextLine();
-            leitor.nextLine();
             if (aux_nome.isEmpty()) {
                 break;
             }
@@ -172,8 +170,7 @@ public class GerenciadorUsuarios {
             while (true) { 
                 System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
                 System.out.println();
-                int opcao = leitor.nextInt();
-                leitor.nextLine();
+                int opcao = Integer.parseInt(leitor.nextLine());
                 if (opcao == 1) {
                     aux_tipo = "Aluno";
                     break;

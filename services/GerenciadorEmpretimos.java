@@ -10,16 +10,16 @@ import java.util.Scanner;
 import java.util.Iterator;
 import java.util.List;
 
-public class GerenciadorEmprestimos {
+public class GerenciadorEmpretimos {
     private Scanner ler;
     private List<Livro> livrosEmprestados;
     private Iterator<Livro> listaLivros;
     private Usuario usuario;
     private Livro livro;
-    private static GerenciadorEmprestimos instancia;
+    private static GerenciadorEmpretimos instancia;
     
 
-    private GerenciadorEmprestimos(Usuario usuario, Livro livro) {
+    private GerenciadorEmpretimos(Usuario usuario, Livro livro) {
         livrosEmprestados = new ArrayList<Livro>();
 
         this.usuario = usuario;
@@ -32,9 +32,9 @@ public class GerenciadorEmprestimos {
 
 
    
-    public static GerenciadorEmprestimos getInstancia(Usuario usuario, Livro livro) throws ParseException {
+    public static GerenciadorEmpretimos getInstancia(Usuario usuario, Livro livro) throws ParseException {
     if (instancia == null) {
-       instancia = new GerenciadorEmprestimos(usuario, livro);
+       instancia = new GerenciadorEmpretimos(usuario, livro);
     }
     return instancia;
 }
@@ -164,12 +164,12 @@ public void setLivrosEmprestados(List<Livro> livrosEmprestados) {
         this.livro = livro;
     }
 
-    public static GerenciadorEmprestimos getInstancia() {
+    public static GerenciadorEmpretimos getInstancia() {
         return instancia;
     }
 
-    public static void setInstancia(GerenciadorEmprestimos instancia) {
-        GerenciadorEmprestimos.instancia = instancia;
+    public static void setInstancia(GerenciadorEmpretimos instancia) {
+        GerenciadorEmpretimos.instancia = instancia;
     }
 
     @Override
