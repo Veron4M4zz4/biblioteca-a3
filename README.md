@@ -46,8 +46,8 @@ biblioteca-a3/
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/biblioteca-a3.git
-   cd biblioteca-a3
+   git clone https://github.com/seu-usuario/libratech.git
+   cd libratech
    
 javac -cp ".;lib/*" Main.java
 java -cp ".;lib/*" Main
