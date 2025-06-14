@@ -13,28 +13,28 @@ public class GerenciadorUsuarios {
     private Iterator<Usuario> listaNomes;
     private Scanner leitor;
     private static GerenciadorUsuarios instancia;
-    private String aux_telefone;
-    private String aux_cpf;
-    private String aux_email;
-    private String aux_tipo;
-    private int opcao;
+
 
     private GerenciadorUsuarios() {
         nomes = new ArrayList<Usuario>();
         leitor = new Scanner(System.in);
-        System.out.println("SE QUISER PARAR DEIXE NOME VAZIO.");
+        System.out.println("SE QUISER PARAR DIGITE -1 NO NOME.");
 
         while (true) {
+            String aux_cpf;
+            String aux_email;
+            String aux_telefone;
+            String aux_tipo;
             System.out.println("----------------------------------");
 
             System.out.println("nome: ");
             String aux_nome = leitor.nextLine();
-            if (aux_nome.isEmpty()) {
+            if (aux_nome ==  "-1") {
                 break;
             }
             while (true) { 
                 System.out.println("cpf: ");
-                String aux_cpf = leitor.nextLine();
+                aux_cpf = leitor.nextLine();
                 if(aux_cpf.length() == 11){
                     break;
                 }
@@ -45,7 +45,7 @@ public class GerenciadorUsuarios {
 
             while (true) { 
                 System.out.println("email: ");
-                String aux_email = leitor.nextLine();
+                aux_email = leitor.nextLine();
                 if(aux_email.contains("@")){
                     break;
                 }
@@ -67,9 +67,8 @@ public class GerenciadorUsuarios {
             }
             while (true) { 
                 System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
-                System.out.println();
-                opcao = leitor.nextInt();
-                
+                int opcao = leitor.nextInt();
+                leitor.nextLine();
                     if (opcao == 1) {
                         aux_tipo = "Aluno";
                         break;
@@ -122,19 +121,23 @@ public class GerenciadorUsuarios {
     }
 
     public void AdicionarUsuario() {
-        System.out.println("SE QUISER PARAR DEIXE NOME VAZIO.");
         while (true) {
+            String aux_cpf;
+            String aux_email;
+            String aux_telefone;
+            String aux_tipo;
+            System.out.println("SE QUISER PARAR DEIXE NOME VAZIO.");
             System.out.println("----------------------------------");
             System.out.println("nome: ");
             String aux_nome = leitor.nextLine();
-
+            leitor.nextLine();
             if (aux_nome.isEmpty()) {
                 break;
             }
 
             while (true) { 
                 System.out.println("cpf: ");
-                String aux_cpf = leitor.nextLine();
+                aux_cpf = leitor.nextLine();
                 if(aux_cpf.length() == 11){
                     break;
                 }
@@ -145,7 +148,7 @@ public class GerenciadorUsuarios {
 
             while (true) { 
                 System.out.println("email: ");
-                String aux_email = leitor.nextLine();
+                aux_email = leitor.nextLine();
                 if(aux_email.contains("@")){
                     break;
                 }
@@ -169,7 +172,8 @@ public class GerenciadorUsuarios {
             while (true) { 
                 System.out.println("1 - Aluno\n2 - Professor\ntipo: ");
                 System.out.println();
-                opcao = leitor.nextInt();
+                int opcao = leitor.nextInt();
+                leitor.nextLine();
                 if (opcao == 1) {
                     aux_tipo = "Aluno";
                     break;
@@ -183,7 +187,7 @@ public class GerenciadorUsuarios {
             }
             
 
-            //nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
+            nomes.add(new Usuario(aux_nome, aux_cpf, aux_email, aux_telefone, aux_tipo));
         }
     }
 

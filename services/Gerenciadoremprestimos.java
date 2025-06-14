@@ -30,65 +30,15 @@ public class GerenciadorEmprestimos {
         livrosEmprestados.add(livro);
     }
 
-    private GerenciadorEmprestimos(Usuario usuario) {
-    ler = new Scanner(System.in);
-    this.usuario = usuario;
 
-    while (true) {
-        System.out.print("Título para buscar (vazio para sair): ");
-        String termoBusca = ler.nextLine();
-        if (termoBusca.isEmpty()) break;
-
-        try {
-            GoogleBooksService googleBooksService = new GoogleBooksService(); 
-            List<Livro> resultados = googleBooksService.buscarLivro(termoBusca);
-
-            if (resultados.isEmpty()) {
-                System.out.println("Nenhum livro encontrado.");
-                continue;
-            }
-
-            System.out.println("Resultados encontrados:");
-            for (int i = 0; i < resultados.size(); i++) {
-                Livro l = resultados.get(i);
-                System.out.println((i + 1) + " - " + l.getTitulo() + " | " + l.getAutor());
-            }
-
-            System.out.print("Escolha o número do livro que deseja emprestar: ");
-            int escolha = ler.nextInt();
-            ler.nextLine();
-
-            if (escolha < 1 || escolha > resultados.size()) {
-                System.out.println("Escolha inválida.");
-                continue;
-            }
-
-            Livro livroEscolhido = resultados.get(escolha - 1);
-            livroEscolhido.setEmprestado(true);
-            livrosEmprestados.add(livroEscolhido);
-            System.out.println("Livro emprestado com sucesso!");
-
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Erro ao buscar livro: " + e.getMessage());
-        }
-    }
-}
-    
 
     // proibe de usar o construtor mais de uma vez
     public static GerenciadorEmprestimos getInstancia(Usuario usuario, Livro livro) throws ParseException {
-        if (livro == null){
-            if (instancia == null) {
-            instancia = new GerenciadorEmprestimos(usuario);
-        }else{
-        if (instancia == null) {
-            instancia = new GerenciadorEmprestimos(usuario, livro);
-        }
-        }
+    if (instancia == null) {
+       instancia = new GerenciadorEmprestimos(usuario, livro);
     }
-        return instancia;
+    return instancia;
 }
-
 
     public void AdicionarEmprestimo() {
         ler = new Scanner(System.in);

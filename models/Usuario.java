@@ -113,9 +113,9 @@ public class Usuario {
     }
     //verifica se o cpf e nulo e verifica que so pode conter 11 numeros
     public void setCpf(String cpf) {
-        if (cpf == null || !cpf.matches("\\d{11}")) {
+        /*if (cpf == null || !cpf.matches("\\d{11}")) {
             throw new IllegalArgumentException("CPF inválido. Deve conter exatamente 11 dígitos numéricos.");
-        }
+        }*/
         this.cpf = cpf;
     }
 
