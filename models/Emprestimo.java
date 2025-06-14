@@ -1,4 +1,4 @@
-package bin.models;
+package models;
 
 public class Emprestimo {
     private int id;

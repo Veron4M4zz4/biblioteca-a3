@@ -1,4 +1,4 @@
-package dao;
+
 
 import models.Emprestimo;
 
@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseHelper {
+public class EmprestimoDataBaseHelper {
     private static final String URL = "jdbc:sqlite:ITAU.db";
 
     public void criarTabelaEmprestimo() {
