@@ -1,19 +1,38 @@
 package models;
 
-public class Professor extends Usuario {
-    private String departamento; //tratado
+import java.util.Scanner;
 
-    public Professor(String nome, String cpf, String email, String telefone, String matricula, String tipo, String departamento, String titulacao) {
+public class Professor extends Usuario {
+    private String departamento;
+
+/*     public Professor(String nome, String cpf, String email, String telefone, String matricula, String tipo, String departamento, String titulacao) {
         super(nome, cpf, email, telefone, tipo);
         setDepartamento(departamento);
     }
+*/
+    public Professor(){
+        System.out.println("tchau");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nome:");
+        setNome(sc.nextLine());
+        System.out.println("CPF:");
+        setCpf(sc.nextLine());
+        System.out.println("Email:");
+        setEmail(sc.nextLine());
+        System.out.println("Telefone:");
+        setTelefone(sc.nextLine());
+        setTipo("Professor");
+        this.departamento = sc.nextLine();
+
+        setBloqueado(false);
+    }
+    
 
     public String getDepartamento() {
         return departamento;
     }
 
     public void setDepartamento(String departamento) {
-        //verifica se o departamento e nulo
         if (departamento == null) {
             throw new IllegalArgumentException("Departamento não pode ser nulo.");
         }

@@ -2,6 +2,7 @@ package models;
 
 import java.util.regex.Pattern;
 import java.util.Date;
+import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -17,18 +18,50 @@ public class Livro {
     private static final SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy");
 
     public Livro() {
-        this("Título Desconhecido", "Autor Desconhecido", 0, "0000000000000");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("titulo:");
+        setTitulo(sc.nextLine());
+        System.out.println("Autor:");
+        setAutor(sc.nextLine());
+        System.out.println("Numero de Paginas");
+        setNumeroDePaginas(sc.nextInt());
+        sc.nextLine();
+        System.out.println("ISBN:");
+        setIsbn(sc.nextLine());
+
+        this.dataCriacao = new Date(); 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataCriacao);
+        cal.add(Calendar.DAY_OF_MONTH, 14);
+        this.dataDevolucao = cal.getTime();
+        System.out.println("Livro criado em: " + sdf.format(this.dataCriacao));
+        System.out.println("Data Prevista para Devolução: " + sdf.format(this.dataDevolucao));
     }
 
     public Livro(String titulo, String autor) {
         setTitulo(titulo);
         setAutor(autor);
+        this.dataCriacao = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataCriacao);
+        cal.add(Calendar.DAY_OF_MONTH, 14);
+        this.dataDevolucao = cal.getTime();
+        System.out.println("Livro criado em: " + sdf.format(this.dataCriacao));
+        System.out.println("Data Prevista para Devolução: " + sdf.format(this.dataDevolucao));
     }
 
     public Livro(String titulo, String autor, int numeroDePaginas) {
+        Scanner sc = new Scanner(System.in);
         setTitulo(titulo);
         setAutor(autor);
         setNumeroDePaginas(numeroDePaginas);
+        this.dataCriacao = new Date();// 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dataCriacao);
+        cal.add(Calendar.DAY_OF_MONTH, 14);
+        this.dataDevolucao = cal.getTime();
+        System.out.println("Livro criado em: " + sdf.format(this.dataCriacao));
+        System.out.println("Data Prevista para Devolução: " + sdf.format(this.dataDevolucao));
     }
 
     public Livro(String titulo, String autor, int numeroDePaginas, String isbn) {
@@ -88,9 +121,9 @@ public class Livro {
         if (autor == null || autor.trim().isEmpty()) {
             throw new IllegalArgumentException("Autor não pode ser nulo ou vazio.");
         }   //se for diferente da sintaxe 
-        if (!Pattern.matches("^[A-Za-zÀ-ÿ\\s]+$", autor)) {
+        /*if (!Pattern.matches("^[A-Za-zÀ-ÿ\\\\s.'-]+$", autor)) {
             throw new IllegalArgumentException("Autor inválido. Deve conter apenas letras e espaços, sem números ou caracteres especiais.");
-        }
+        }*/
         this.autor = autor;
     }
 
@@ -102,9 +135,9 @@ public class Livro {
     }
 
     public void setNumeroDePaginas(int numeroDePaginas) {
-        if (numeroDePaginas <= 0) { //menor ou igual a zero
+        /*if (numeroDePaginas <= 0) { //menor ou igual a zero
             throw new IllegalArgumentException("Número de páginas deve ser maior que zero.");
-        }
+        }*/
         this.numeroDePaginas = numeroDePaginas;
     }
 

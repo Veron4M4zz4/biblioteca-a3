@@ -14,7 +14,6 @@ public class GerenciadorUsuarios {
     private Scanner leitor;
     private static GerenciadorUsuarios instancia;
 
-
     private GerenciadorUsuarios() {
         nomes = new ArrayList<Usuario>();
         leitor = new Scanner(System.in);
@@ -120,6 +119,7 @@ public class GerenciadorUsuarios {
     }
 
     public void AdicionarUsuario() {
+        
         while (true) {
             String aux_cpf;
             String aux_email;

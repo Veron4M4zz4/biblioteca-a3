@@ -1,6 +1,6 @@
 package models;
 
-import java.util.regex.Pattern;
+import java.util.Scanner;
 
 public class Usuario {
     protected String nome; //tratado
@@ -16,8 +16,28 @@ public class Usuario {
         setCpf(cpf);
     }
 
-    public Usuario(String nome) {
-        setNome(nome);
+    public Usuario() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nome:");
+        setNome(sc.nextLine());
+        System.out.println("CPF:");
+        setCpf(sc.nextLine());
+        System.out.println("Email:");
+        setEmail(sc.nextLine());
+        System.out.println("Telefone:");
+        setTelefone(sc.nextLine());
+        System.out.println("Professor ou Estudante?");
+        this.tipo = sc.nextLine().toLowerCase(); //para letra caixa baixa, ou seja tudo minusculo
+
+        if(tipo.equalsIgnoreCase("Estudante")){
+            this.limiteDeLivros = 3;
+        } else if (tipo.equalsIgnoreCase("Professor")){
+            this.limiteDeLivros = 5;
+        } else {
+            this.limiteDeLivros = 0;
+        }
+
+        this.bloqueado = false;
     }
 
     public Usuario(String nome, String cpf, String email, String telefone, String tipo) {
@@ -55,9 +75,9 @@ public class Usuario {
     }
      //verifica se o nome e nulo e se contem apenas letras
     public void setNome(String nome) {
-        if (nome == null || !Pattern.matches("^[A-Za-zÀ-ÿ\\s]+$", nome)) {
+        /*if (nome == null || !Pattern.matches("^[A-Za-zÀ-ÿ\\s]+$", nome.trim())) {
             throw new IllegalArgumentException("Nome inválido. Deve conter apenas letras e não pode ser nulo.");
-        }
+        }*/
         this.nome = nome;
     }
 
