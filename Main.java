@@ -5,10 +5,10 @@ import services.*;
 public class Main {
     public static void main(String[] args) throws ParseException, SQLException {
 
-        System.out.println("oi");
-        Professor professor1 = new Professor(); //Leonardo Alves Gonçalves,00000000000,LeonardoAlves@gmail.com,719999999999,Matematica
-        System.out.println(professor1);
-
+        GerenciadorUsuarios gu1 = GerenciadorUsuarios.getInstancia();
+        gu1.AdicionarUsuario();
+        gu1.RemoverUsuario();
+        gu1.RemoverUsuarioNome("Leo");
 
 
         /* 
