@@ -1,7 +1,6 @@
 package services;
 
 import models.*;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -177,8 +176,6 @@ public void setLivrosEmprestados(List<Livro> livrosEmprestados) {
         StringBuilder sb = new StringBuilder();
         sb.append("GerenciadorEmprestimos{");
         sb.append("livrosEmprestados=").append(livrosEmprestados);
-        sb.append(", listaLivros=").append(listaLivros);
-        sb.append(", ler=").append(ler);
         sb.append(", usuario=").append(usuario);
         sb.append(", livro=").append(livro);
         sb.append('}');
