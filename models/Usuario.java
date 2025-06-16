@@ -3,145 +3,85 @@ package models;
 import java.util.Scanner;
 
 public class Usuario {
-    protected String nome; //tratado
-    protected String cpf; //tratado
-    protected String email; //tratado
-    protected String telefone; //tratado
-    protected String tipo;
-    protected int limiteDeLivros;
-    private boolean bloqueado = true;
-
-    public Usuario(String nome, String cpf) {
-        setNome(nome);
-        setCpf(cpf);
-    }
-
-    public Usuario() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nome:");
-        setNome(sc.nextLine());
-        System.out.println("CPF:");
-        setCpf(sc.nextLine());
-        System.out.println("Email:");
-        setEmail(sc.nextLine());
-        System.out.println("Telefone:");
-        setTelefone(sc.nextLine());
-        System.out.println("Professor ou Estudante?");
-        this.tipo = sc.nextLine().toLowerCase(); //para letra caixa baixa, ou seja tudo minusculo
-
-        if(tipo.equalsIgnoreCase("Estudante")){
-            this.limiteDeLivros = 3;
-        } else if (tipo.equalsIgnoreCase("Professor")){
-            this.limiteDeLivros = 5;
-        } else {
-            this.limiteDeLivros = 0;
-        }
-
-        this.bloqueado = false;
-    }
+    private String nome;
+    private String cpf;
+    private String email;
+    private String telefone;
+    private String tipo;
+    private int limiteDeLivros;
+    private boolean bloqueado = false;
 
     public Usuario(String nome, String cpf, String email, String telefone, String tipo) {
         setNome(nome);
         setCpf(cpf);
         setEmail(email);
         setTelefone(telefone);
-        this.tipo = tipo.toLowerCase(); //para letra caixa baixa, ou seja tudo minusculo
-
-        if(tipo.equalsIgnoreCase("Estudante")){
-            this.limiteDeLivros = 3;
-        } else if (tipo.equalsIgnoreCase("Professor")){
-            this.limiteDeLivros = 5;
+        setTipo(tipo);
+        if(tipo.equalsIgnoreCase("estudante")) {
+            limiteDeLivros = 3;
+        } else if(tipo.equalsIgnoreCase("professor")) {
+            limiteDeLivros = 5;
         } else {
-            this.limiteDeLivros = 0;
+            limiteDeLivros = 0;
         }
-
-        this.bloqueado = false;
+        bloqueado = false;
     }
 
-    public String exibirDados() {
-        if (!bloqueado) {
-            return "O(A) " + nome + " (" + tipo + ") está com status DESBLOQUEADO e pode pegar: " + limiteDeLivros;
-        } else {
-            return "O(A) " + nome + " está com status BLOQUEADO";
-        }
-    }
+    public Usuario() {}
 
-    public double taxaMulta(int diasAtraso) {
-        return diasAtraso * 1.0; 
-    }
-
-    public String getNome() {
-        return nome;
-    }
-     //verifica se o nome e nulo e se contem apenas letras
+    public String getNome() { return nome; }
     public void setNome(String nome) {
-        /*if (nome == null || !Pattern.matches("^[A-Za-zÀ-ÿ\\s]+$", nome.trim())) {
-            throw new IllegalArgumentException("Nome inválido. Deve conter apenas letras e não pode ser nulo.");
-        }*/
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-     //verifica se o email contem @
-    public void setEmail(String email) {
-        if (email != null && email.contains("@")) {
-            this.email = email;
-        } else {
-            System.out.println("Email inválido. Deve conter '@'.");
+        while(nome == null || nome.trim().isEmpty() || !nome.matches("[A-Za-zÀ-ÿ\\s]+")) {
+            System.out.println("Nome inválido. Digite novamente:");
+            nome = new Scanner(System.in).nextLine();
         }
+        this.nome = nome.trim();
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) {
+        while(cpf == null || !cpf.matches("\\d{11}")) {
+            System.out.println("CPF inválido. Deve ter 11 dígitos numéricos. Digite novamente:");
+            cpf = new Scanner(System.in).nextLine();
+        }
+        this.cpf = cpf;
     }
-    //verifica se o telefone e nulo e verifica que so pode conter 12 numeros
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) {
+        while(email == null || !email.contains("@") || email.trim().isEmpty()) {
+            System.out.println("Email inválido. Digite novamente:");
+            email = new Scanner(System.in).nextLine();
+        }
+        this.email = email.trim();
+    }
+
+    public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) {
-        if (telefone == null || !telefone.matches("\\d{12}")) {
-            throw new IllegalArgumentException("Telefone inválido. Deve conter exatamente 12 dígitos numéricos.");
+        while(telefone == null || !telefone.matches("\\d{10,12}")) {
+            System.out.println("Telefone inválido. Digite somente números (10 a 12 dígitos). Digite novamente:");
+            telefone = new Scanner(System.in).nextLine();
         }
         this.telefone = telefone;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
+    public String getTipo() { return tipo; }
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        while(tipo == null || (!tipo.equalsIgnoreCase("estudante") && !tipo.equalsIgnoreCase("professor"))) {
+            System.out.println("Tipo inválido. Digite 'Estudante' ou 'Professor':");
+            tipo = new Scanner(System.in).nextLine();
+        }
+        this.tipo = tipo.toLowerCase();
     }
 
-    public int getLimiteDeLivros() {
-        return limiteDeLivros;
-    }
+    public int getLimiteDeLivros() { return limiteDeLivros; }
 
-    public void setLimiteDeLivros(int limiteDeLivros) {
-        this.limiteDeLivros = limiteDeLivros;
-    }
-
-    public boolean isBloqueado() {
-        return bloqueado;
-    }
-
-    public void setBloqueado(boolean bloqueado) {
-        this.bloqueado = bloqueado;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-    //verifica se o cpf e nulo e verifica que so pode conter 11 numeros
-    public void setCpf(String cpf) {
-        /*if (cpf == null || !cpf.matches("\\d{11}")) {
-            throw new IllegalArgumentException("CPF inválido. Deve conter exatamente 11 dígitos numéricos.");
-        }*/
-        this.cpf = cpf;
-    }
+    public boolean isBloqueado() { return bloqueado; }
+    public void setBloqueado(boolean bloqueado) { this.bloqueado = bloqueado; }
 
     @Override
     public String toString() {
-        return "Usuario [nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", telefone=" + telefone
-                + ", tipo=" + tipo + ", limiteDeLivros=" + limiteDeLivros + ", bloqueado=" + bloqueado + "]";
+        return "Nome: " + nome + ", CPF: " + cpf + ", Email: " + email + ", Telefone: " + telefone +
+                ", Tipo: " + tipo + ", Limite de livros: " + limiteDeLivros + ", Bloqueado: " + bloqueado;
     }
 }

@@ -1,67 +1,61 @@
-import java.sql.SQLException;
-import java.text.ParseException;
-import models.*;
-import services.*;
+import java.util.Scanner;
+import services.GerenciadorEmprestimos;
+import services.GerenciadorLivros;
+import services.GerenciadorUsuarios;
+
 public class Main {
-    public static void main(String[] args) throws ParseException, SQLException {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        GerenciadorUsuarios gu = new GerenciadorUsuarios();
+        GerenciadorLivros gl = new GerenciadorLivros();
+        GerenciadorEmprestimos ge = new GerenciadorEmprestimos();
 
-        GerenciadorUsuarios gu1 = GerenciadorUsuarios.getInstancia();
-        gu1.AdicionarUsuario();
-        gu1.RemoverUsuario();
-        gu1.RemoverUsuarioNome("Leo");
+        boolean rodando = true;
+        while(rodando) {
+            System.out.println("\n==== MENU ====");
+            System.out.println("1 - Cadastrar Usuário");
+            System.out.println("2 - Deletar Usuário");
+            System.out.println("3 - Listar Usuários");
+            System.out.println("4 - Cadastrar Livro");
+            System.out.println("5 - Listar Livros");
+            System.out.println("6 - Emprestar Livro");
+            System.out.println("7 - Devolver Livro");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha a opção: ");
 
-
-        /* 
-        GerenciadorEmprestimos ge1 = GerenciadorEmprestimos.getInstancia(usuario1,livro);
-        ge1.AdicionarEmprestimo();
-        System.out.println("Devolução");
-        ge1.Devolucao();
-        System.out.println("Mostrardados");
-        ge1.MostrarDados();
-
-        System.out.println("\nGE2");
-        GerenciadorEmprestimos ge2 = GerenciadorEmprestimos.getInstancia(usuario1,null);
-        ge2.MostrarDados();
-        
-        Usuario usuario1 = new Usuario("Leonado Alves Gonçalves","98484107086","assa@gmail.com","121945668901","Professor");
-        Usuario usuario2 = new Usuario("Alice Sampaio da Silva","29840165054","Sampaio23@gmail.com","719883870190","Aluno");
-        Usuario usuario3 = new Usuario("Luiz Alberto Carlos","78314228036","LuizALb459@hotmail.com","989968493001","Professor");
-        Usuario usuario4 = new Usuario("Carlos Almeida","14956654022");
-        Usuario usuario5 = new Usuario(); //Leonardo Alves Gonçalves,00000000000,LeonardoAlves@gmail.com,719999999999,Estudante
-        System.out.println(usuario5);
-        System.out.println(usuario1);
-        System.out.println(usuario2);
-        System.out.println(usuario3);
-        System.out.println(usuario4);
-        System.out.println(usuario5);
-
-        Livro livro = new Livro("Diario de um Banana: dias de cão", "Jeff Kinney", 224, "9780670074952");
-        Livro livro1 = new Livro("Diario de um Banana: Rodrick é o cara", "Jeff Kinney", 224);
-        Livro livro2 = new Livro("Tratado de Anatomia Veterinaria","Dyce");
-        livro.emprestar();
-        livro.devolver();
-        livro1.emprestar();
-        livro1.devolver();
-        livro2.emprestar();
-        livro2.devolver();
-        System.out.println(livro);
-        System.out.println(livro1);
-        System.out.println(livro2);
-        Livro livro3 = new Livro(); // Livro exemplo, Autor, 212, 9780670074952
-        System.out.println(livro3);
-
-        GerenciadorEmpretimos ge1 = GerenciadorEmpretimos.getInstancia(usuario5,livro3);
-        System.out.println(ge1);
-        System.out.println("\nAdicionar Emprestimo:");
-        ge1.AdicionarEmprestimo();
-        System.out.println(ge1);
-
-        Usuario usuario2 = new Usuario("leonaro","12345678901","leo@leo.com","1234567890","professor");
-        GerenciadorUsuarios gu1 = GerenciadorUsuarios.getInstancia();
-        gu1.AdicionarUsuario();
-        gu1.RemoverUsuario();
-        gu1.RemoverUsuarioNome("Leo");
-        gu1.SalvarUsuarioNoBanco();
-        */
-    }   
+            String opcao = sc.nextLine();
+            switch(opcao) {
+                case "1":
+                    gu.cadastrarUsuario(sc);
+                    break;
+                case "2":
+                    System.out.print("Digite o CPF do usuário a deletar: ");
+                    String cpfDel = sc.nextLine();
+                    gu.deletarUsuario(cpfDel);
+                    break;
+                case "3":
+                    gu.listarUsuarios();
+                    break;
+                case "4":
+                    gl.cadastrarLivro(sc);
+                    break;
+                case "5":
+                    gl.listarLivros();
+                    break;
+                case "6":
+                    ge.emprestarLivro(sc, gu, gl);
+                    break;
+                case "7":
+                    ge.devolverLivro(sc, gl);
+                    break;
+                case "0":
+                    rodando = false;
+                    System.out.println("Encerrando programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+        sc.close();
+    }
 }
